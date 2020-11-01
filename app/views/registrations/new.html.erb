@@ -1,0 +1,14 @@
+<h1>Renting <%= @book.name%> at what time</h1>
+<%= form_for([@book,@registration]) do |f| %>
+<p>
+    <%= f.label :check_in %><br/>
+    <%= f.datetime_select :check_in %>
+</p>
+<p>
+    <%= f.label :check_out %><br/>
+    <%= f.datetime_select :check_out %>
+</p>
+<p>
+    <%= f.submit "Submit" %>
+</p>
+<% end %>

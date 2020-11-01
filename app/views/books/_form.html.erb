@@ -1,0 +1,36 @@
+<%= form_for @book, :html => {:class => "form-horizontal center"} do |f| %>
+
+      <%= render partial: 'shared/errors' , object: @var = @book%>
+
+      <div class="form-group">
+        <%= f.label :name, "Book name:", class: "col-md-4 control-label" %>
+        <div class="col-md-8">
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :author, "Autor name:", class: "col-md-4 control-label" %>
+        <div class="col-md-8">
+          <%= f.text_field :author, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :isbn, "ISBN number:", class: "col-md-4 control-label" %>
+        <div class="col-md-8">
+          <%= f.text_field :isbn, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :describtion, "Description:", class: "col-md-4 control-label" %>
+        <div class="col-md-8">
+          <%= f.text_area :describtion, class: "form-control" %>
+        </div>
+      </div>
+      
+      
+      
+
+      <%= f.submit "Submit", class: "btn btn-default btn-primary" %>  
+ <% end %>

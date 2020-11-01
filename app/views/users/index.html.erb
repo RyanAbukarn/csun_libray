@@ -1,0 +1,17 @@
+ <% @users.each do |user|%>
+<h1><%= name_format(user.fname,user.lname) %></h1>  <br>
+<h2>Here are all the books that the user has<h2> <br>
+
+<% if user.registration.any? %>
+    <ul>
+        <% user.registration.each do |registration|%>
+        <li>
+            <%= link_to registration.book.name,registration.book %>
+            <h5>(<%= time_ago_in_words(registration.check_out)%> left)</h5>
+        </li>
+        <% end %>
+    </ul>
+    <%end%>
+<%end%>
+<br>
+

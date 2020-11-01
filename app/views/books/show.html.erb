@@ -1,0 +1,8 @@
+<div class="card" style="width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title"><%= @book.name %></h5>
+    <p class="card-text"><%= @book.author %> <%= @book.describtion %></p>
+    <%= link_to "Rent", new_book_registration_path(@book), class: "btn btn-default btn-primary" %>
+  </div>
+</div>

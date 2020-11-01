@@ -1,0 +1,14 @@
+<% if @var.errors.any? %>
+<div class="alert alert-danger">
+    <h2>There are some errors </h2>
+    <h3>
+        Please correct the following
+        <%= pluralize(@var.errors.count,"error")%>
+    </h3>
+    <ul>
+    <% @var.errors.full_messages.each do |message| %>
+        <li><%= message%></li>
+        <% end %>
+    </ul>
+</div>
+<% end %>
