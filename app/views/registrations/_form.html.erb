@@ -1,0 +1,31 @@
+<h1>Renting <%= @book.name%> at what time</h1>
+<%= form_for([@book,@registration]) do |f| %>
+<p>
+    <%= f.label :check_in %><br/>
+    <%= f.datetime_select :check_in %>
+</p>
+<p>
+    <%= f.label :check_out %><br/>
+    <%= f.datetime_select :check_out %>
+</p>
+<% if make_user_admin %>
+<div class="field">
+    <p>Did user return the book</p>
+    <%= f.label :is_checked_out, "Yes", :value => "true"  %>
+    <%= f.radio_button :is_checked_out, true %>
+    <%= f.label :is_checked_out, "No", :value => "false" %>
+    <%= f.radio_button :is_checked_out, false, :checked => true %>
+</div>
+<div class="field">
+    <p>Did user take the book</p>
+    <%= f.label :is_checked_in, "Yes", :value => "true"  %>
+    <%= f.radio_button :is_checked_in, true %>
+    <%= f.label :is_checked_in, "No", :value => "false" %>
+    <%= f.radio_button :is_checked_in, false, :checked => true %>
+</div>
+<% end %>
+<p>
+    <%= f.submit "Submit" %>
+</p>
+
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_01_000453) do
+ActiveRecord::Schema.define(version: 2020_11_09_203219) do
 
   create_table "books", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2020_11_01_000453) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "check_in"
     t.datetime "check_out"
+    t.boolean "is_checked_out", default: false
+    t.boolean "is_checked_in", default: false
     t.index ["book_id"], name: "index_registrations_on_book_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end

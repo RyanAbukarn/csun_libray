@@ -5,12 +5,30 @@
 <% if user.registration.any? %>
     <ul>
         <% user.registration.each do |registration|%>
-        <li>
-            <%= link_to registration.book.name,registration.book %>
-            <h5>(<%= time_ago_in_words(registration.check_out)%> left)</h5>
-        </li>
+            <% if !registration.is_checked_out %>
+                <li>
+                    <%= link_to registration.book.name,registration.book %>
+                    <h5>
+                        (<%= time_ago_in_words(registration.check_out)%> left)
+                        <%= link_to "Edit", edit_book_registration_path(registration.book.id,registration.id)%>
+                    </h5>
+                </li>
+            <% else %>
+             <li>
+                    <%= link_to registration.book.name,registration.book %>
+                    <h5>
+                        alreday retuened on  
+                        (<%= registration.check_out.to_s(:long)%>)
+                    </h5>
+                </li>
+            <% end %>
         <% end %>
     </ul>
+    
+<% else %>
+    <div class="alert alert-warning" role="alert">
+        This user does not own any books
+    </div>
     <%end%>
 <%end%>
 <br>

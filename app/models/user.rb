@@ -10,11 +10,14 @@ class User < ApplicationRecord
 
     validates :email, format: {
         with: URI::MailTo::EMAIL_REGEXP,
-        message: "Must be wordword.word"
+        message: "Must be word@word.word"
     }
+
 
     def self.auth(email,password)
         @user = User.find_by_email(email)
         @user && @user.authenticate(password)
     end
+
+
 end

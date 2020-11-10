@@ -1,0 +1,46 @@
+<h5>Search by date</h5>
+<%= form_tag(by_date_path) do %>
+<p>
+    <%= label_tag :start, "check-in:", class: "col-md-4 control-label" %><br/>
+    <%= datetime_select("start", "written_on")%>
+</p>
+<p>
+    <%= label_tag :ends, "check-out:", class: "col-md-4 control-label"  %><br/>
+    <%= datetime_select("ends", "written_on")%>
+</p>
+
+<p>
+    <%= submit_tag "Search" %>
+</p>
+
+<% end %>
+
+<h5>Available any time</h5>
+
+<table class=" table table-striped sortable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author name</th>
+      <th>ISBN</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+   <% @books.each do |book| %>
+     <tr>
+        <td><%= link_to book.name,book_path(book) %></td>
+        <td><%= book.author %></td>
+        <td><%= book.isbn %></td>
+        <td>
+          <% if current_user && current_user.admin? %>
+            <%= link_to "Edit",edit_book_path(book), class: "btn btn-default btn-info" %>
+            <%= link_to "Delete",book_path(book), data: {:confirm => 'Are you sure?'}, :method => :delete , class: "btn btn-default btn-danger" %>
+          <% else %>
+            <%= link_to "Rent",new_book_registration_path(book), class: "btn btn-default btn-primary" %>
+          <% end %>
+        </td>
+    </tr>
+   <% end %>
+
+</table>

@@ -27,7 +27,12 @@
       <% end %>
      
       <% if current_user && current_user.admin? %>
-        <%= link_to 'Add new books',new_book_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        <div class="mr-2">
+          <%= link_to 'Add new books',new_book_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+        <div class="mr-2">
+        <%= link_to 'Sign Up admin user',signup_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
       <% end %>
     </form>
   </nav>
@@ -37,6 +42,7 @@
       <%= flash[:notice] %>
     </div>
     <% end %>
+    
     <%= yield %>
   </body>
 </html>

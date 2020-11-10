@@ -1,15 +1,32 @@
 <h1><%= name_format(@user.fname,@user.lname) %></h1>  <br>
-<h2>Here are all the books you have or booked<h2> <br>
+<h2>Here are all the books you booked<h2>
 
-<% if @registrations.any? %>
+<% if @BookedRegistrations.any? %>
 <ul>
-    <% @registrations.each do |registration|%>
+    <% @BookedRegistrations.each do |registration|%>
+    <li>
+        <%= link_to registration.book.name,registration.book %>
+        <h5>(<%= time_ago_in_words(registration.check_out)%> left)</h5>
+        <%= link_to "Cancel Order",book_registration_path(registration.id), data: {:confirm => 'Are you sure want to cancle this order?'}, :method => :delete , class: "btn btn-default btn-danger" %>
+    </li>
+    <% end %>
+</ul>
+<% else %>
+<h3>You don't own any books</h3>
+<%end%>
+<br>
+<h2>Here are all the books you have<h2>
+<% if @HasRegistrations.any? %>
+<ul>
+    <% @HasRegistrations.each do |registration|%>
     <li>
         <%= link_to registration.book.name,registration.book %>
         <h5>(<%= time_ago_in_words(registration.check_out)%> left)</h5>
     </li>
     <% end %>
 </ul>
+<% else %>
+<h3>All books are retured</h3>
 <%end%>
 <br>
 <% if current_user?(@user) %>
