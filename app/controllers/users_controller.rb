@@ -25,16 +25,14 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_perams)
         @user.admin = make_user_admin
-        if !has_same_email(user_perams[:email])
-            if @user.save
-                if !make_user_admin
-                    session[:user_id] = @user.id
-                    redirect_to @user, notice: "Account successfully created!"
-                else
-                    redirect_to books_url, notice: "Admin Account successfully created!"
-                end
-            else 
-                render :new
+        if @user.save
+            if !make_user_admin
+                #UserMailer.with(user: @user).welcome_email.deliver_later
+                session[:user_id] = @user.id
+                redirect_to @user, notice: "Account successfully created!"
+            else
+                UserMailer.with(user: @user).welcome_email.deliver_later
+                redirect_to books_url, notice: "Admin Account successfully created!"
             end
         else
             flash.now[:error] = "The email is alredy in use. Please use another."
@@ -69,9 +67,7 @@ private
         params.require(:user).permit(:fname,:lname,:email,:phone,:address,:city,:state,:password)
     end
 
-    def has_same_email(email)
-        User.where("email=?",email).any?
-    end  
+
 
 end
 

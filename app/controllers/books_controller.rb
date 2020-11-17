@@ -2,12 +2,16 @@ require 'date'
 
 class BooksController < ApplicationController
     before_action :require_signin , except: [:index, :show,:by_date,:by_date_new]
-    before_action :require_admin, except: [:index, :show,:by_date,:by_date_new]
+    before_action :require_admin, except: [:index, :show,:by_date,:by_date_new,:all_books]
 
     def index
-        @books= Book.avalibe_books
+        @books = Book.avalibe_books
     end
 
+    def all_books
+        @books = Book.all
+    end
+    
     def new
         @book = Book.new
     end
