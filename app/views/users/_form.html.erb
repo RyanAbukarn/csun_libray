@@ -63,26 +63,29 @@
       
       <div class="form-group">
           <div class="col-md-8 required">
-            <%= f.submit "Submit", class: "btn btn-default btn-primary" %> 
+            <%= f.button  "Submit", class: "btn btn-default btn-primary" %> 
           </div> 
       </div>
  <% end %>
 
 
  <script>
-  let stateInput = document.getElementById("user_state");
-  let cityInput = document.getElementById("user_city");
-  stateInput.addEventListener("change", function () {
-    cityInput.innerHTML = ""
-    fetch('/cities/' + stateInput.value)
-    .then(response => response.json())
-    .then(cities => {
-        cities.forEach(city =>{ 
-              let option = document.createElement("option");
-              option.text = city;
-              option.value = city;
-              cityInput.appendChild(option);
+(function (){
+    let stateInput = document.getElementById("user_state");
+    let cityInput = document.getElementById("user_city");
+    stateInput.addEventListener("change", function () {
+      cityInput.innerHTML = ""
+      fetch('/cities/' + stateInput.value)
+      .then(response => response.json())
+      .then(cities => {
+          cities.forEach(city =>{ 
+                let option = document.createElement("option");
+                option.text = city;
+                option.value = city;
+                cityInput.appendChild(option);
+          });
         });
-      });
-  });
+    });
+})();
+
 </script>

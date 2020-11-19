@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, :type => :request do
+RSpec.describe User do
     let(:user) { FactoryBot.build :user }
     let(:book) { FactoryBot.build :book }
 
@@ -8,10 +8,9 @@ RSpec.describe User, :type => :request do
     describe "belong to a user" do 
         it "check if a book belong to a user" do
             r = build(:registration,:with_books, user: user, book: book)
-            r.user == user && r.book=book
+            r.user == user && r.book==book
         end
     end
-
     context "validations" do
         it "check the email format missing @" do
             user.email = "ryan-gmail.com"
@@ -39,7 +38,7 @@ RSpec.describe User, :type => :request do
         end
 
         it "is not a valid phone number lenght that is less than 10" do
-            user.phone = "012345678" # length 1 
+            user.phone = "012345678" # length 9 
             expect(user).not_to be_valid
         end
 

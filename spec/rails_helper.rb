@@ -12,6 +12,10 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'support/factory_bot'
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, browser: :firefox)
+end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

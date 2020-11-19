@@ -50,14 +50,16 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'jquery-rails'
 gem 'bootstrap'
 gem 'city-state'
-
+gem 'poltergeist'
+gem 'geckodriver-helper'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rails-controller-testing' #for the controller 
+  gem 'rspec-rails', '~> 4.0'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
 end

@@ -42,12 +42,13 @@ class RegistrationsController < ApplicationController
     end
 
     def update
-        is_the_book_retured = returned(params[:is_checked_out])
+        is_the_book_retured = returned(params[:is_checked_in])
+        
         @registration = Registration.find(params[:id])
         start = covert_datetime(registration_params,"check_in") 
         ends = covert_datetime(registration_params,"check_out")
         if(date_validation(start,ends))
-            if !is_the_book_retured
+            if is_the_book_retured
                 if @registration.update(registration_params)  
                     redirect_to "/users", notice: "updated successfully"
                 end

@@ -8,5 +8,6 @@ FactoryBot.define do
       city {"Thousand Oaks"}
       state {"CA"}
       password_digest {BCrypt::Password.create("123456")}
+      admin {false}
     end
 end
