@@ -5,8 +5,8 @@ ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+# Use mysql2 as the database for Active Record
+gem 'mysql2', '>= 0.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -53,13 +53,20 @@ gem 'city-state'
 gem 'poltergeist'
 gem 'geckodriver-helper'
 
+
+
+
+
+
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'selenium-webdriver'
   gem 'rails-controller-testing' #for the controller 
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+
 end

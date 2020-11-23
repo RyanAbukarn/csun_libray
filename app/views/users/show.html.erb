@@ -7,7 +7,7 @@
     <li>
         <%= link_to registration.book.name,registration.book %>
         <h5>(<%= time_ago_in_words(registration.check_out)%> left)</h5>
-        <%= link_to "Cancel Order",book_registration_path(registration.id), data: {:confirm => 'Are you sure want to cancle this order?'}, :method => :delete , class: "btn btn-default btn-danger" %>
+        <%= button_to "Cancel Order",book_registration_path(registration.id), data: {:confirm => 'Are you sure want to cancle this order?'}, :method => :delete , class: "btn btn-default btn-danger" %>
     </li>
     <% end %>
 </ul>

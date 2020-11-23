@@ -7,7 +7,7 @@ class User < ApplicationRecord
     validates :address, length: {minimum: 5}
     validates :state, length: {is: 2}
     validates :password_digest, length: {minimum: 6}
-    validates_uniqueness_of :email
+    validates_uniqueness_of :email,  case_sensitive: true
 
     validates :email, format: {
         with: URI::MailTo::EMAIL_REGEXP,

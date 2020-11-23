@@ -42,17 +42,18 @@ class RegistrationsController < ApplicationController
     end
 
     def update
-        is_the_book_retured = returned(params[:is_checked_in])
-        
+        is_the_user_has_book = returned(params[:registration][:is_checked_in])
+        is_the_book_retured = returned(params[:registration][:is_checked_out])
         @registration = Registration.find(params[:id])
+
         start = covert_datetime(registration_params,"check_in") 
         ends = covert_datetime(registration_params,"check_out")
         if(date_validation(start,ends))
-            if is_the_book_retured
+            if is_the_user_has_book
                 if @registration.update(registration_params)  
                     redirect_to "/users", notice: "updated successfully"
                 end
-            else
+            elsif is_the_book_retured
                 @registration.destroy
                 redirect_to "/books", notice: "The book is available"
             end
@@ -71,7 +72,11 @@ class RegistrationsController < ApplicationController
         end
         
         def returned(is_return)
-            is_return=="false" ? false : true
+            if is_return != nil
+                is_return=="false" ? false : true
+            else
+                false
+            end
         end
 
 

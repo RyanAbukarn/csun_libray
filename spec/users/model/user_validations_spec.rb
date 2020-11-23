@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe User do
-    let(:user) { FactoryBot.build :user }
-    let(:book) { FactoryBot.build :book }
+RSpec.describe "Users" do
+    let(:user) { FactoryBot.create :user }
+    let(:book) { FactoryBot.create :book }
 
-    let(:registration) {FactoryBot.build :registration}
     describe "belong to a user" do 
         it "check if a book belong to a user" do
-            r = build(:registration,:with_books, user: user, book: book)
-            r.user == user && r.book==book
+            r = create(:registration, user: user, book: book)
+            expect(r.user).to equal(user) 
+            expect(r.book).to equal(book)
         end
     end
     context "validations" do

@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_11_09_203219) do
 
-  create_table "books", force: :cascade do |t|
+  create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "author"
     t.string "isbn"
@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 2020_11_09_203219) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "registrations", force: :cascade do |t|
-    t.integer "book_id", null: false
-    t.integer "user_id", null: false
+  create_table "registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "check_in"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_203219) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "fname"
     t.string "lname"
     t.string "email"

@@ -2,7 +2,7 @@ require 'date'
 
 class BooksController < ApplicationController
     before_action :require_signin , except: [:index, :show,:by_date,:by_date_new]
-    before_action :require_admin, except: [:index, :show,:by_date,:by_date_new,:all_books]
+    before_action :require_admin, only: [:all_books,:create,:edit,:update,:destroy]
 
     def index
         @books = Book.avalibe_books
@@ -19,7 +19,7 @@ class BooksController < ApplicationController
     def by_date
         @start1 = covert_to_datetime(params[:start])
         @ends1  = covert_to_datetime(params[:ends])
-        @books= Book.avalibe_books
+        @books  = Book.avalibe_books
         if(date_validation(@start1,@ends1))
             @book_by_date = Book.registered_avalible_books_by_date(@start1, @ends1)
         else
@@ -45,6 +45,7 @@ class BooksController < ApplicationController
     end
     
     def create
+        
         @book = Book.new(book_perams)
         if @book.save
             redirect_to @book, notice: "Book successfully created!" 

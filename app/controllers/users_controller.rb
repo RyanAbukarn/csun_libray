@@ -44,22 +44,25 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         @user.destroy
         session[:user_id] = nil
-        redirect_to root_url
+        redirect_to root_url, notice: "Account successfully deleted!"
     end
 
     def show
         @user = User.find(params[:id])
         @BookedRegistrations = @user.registration.where("is_checked_in = false").order(:check_out)
         @HasRegistrations = @user.registration.where("is_checked_in = true and is_checked_out=false").order(:check_out)
-
     end
 
 private
 
     def redirect_correct_user
-        @user = User.find(params[:id])
-        unless current_user?(@user)
-            redirect_to root_url  
+        if User.exists?(params[:id])
+            @user = User.find(params[:id])
+            unless current_user?(@user)
+                redirect_to root_url  
+            end
+        else
+            redirect_to books_url
         end
     end 
 

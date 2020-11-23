@@ -9,24 +9,22 @@ RSpec.describe Book do
     end
     describe "Book list" do
         it "returns all avalibe books" do
-            newBooks = build_list(:book,3)
-            newBooks.each do |newBook|
-                newBook.save
-            end
+            newBooks = create_list(:book,3)
             expect(Book.avalibe_books).to match_array(newBooks)
         end
         it "returns no avalibe books" do
-            newBookings = build_list(:registration,3)
-            newBookings.each do |newBooking|
-                newBooking.is_checked_in = true
-                newBooking.save
-            end
+            newBookings = create_list(:registration,3,is_checked_in: true)
             expect(Book.avalibe_books).to match_array([])
         end
         it "returns all book by date" do
-            newBookings = build_list(:registration,3)
-            book = Book.registered_avalible_books_by_date(Date.today+2,Date.today+3)
-            book.count == 3
+            newBookings = create_list(:registration,3)
+
+            book = Book.registered_avalible_books_by_date(Date.today+2,Date.today+3).count
+            expect(book).to equal(3)
+            book = Book.registered_avalible_books_by_date(Date.today-3,Date.today-2).count
+            expect(book).to equal(3)
+            book = Book.registered_avalible_books_by_date(Date.today,Date.today+1).count
+            expect(book).to equal(0)
         end
     end
     context "validations" do
