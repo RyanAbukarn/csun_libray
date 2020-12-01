@@ -8,9 +8,9 @@ RSpec.describe BooksController, type: :request do
     end
 
     context "when the user is admin" do
-        it "will delete a book" do
+        it "will delete a book"  do
             post  "/session", :params => {email: @userAdmin.email, password: "123456"}
-            delete "/books/#{@books1[0].id}"
+            delete "/books/#{@books1[0].id}", :params => {format: :js}
             expect(Book.all.count).to eq(@books1.count - 1) 
         end
         it "will create a book" do
@@ -23,7 +23,7 @@ RSpec.describe BooksController, type: :request do
             book = Book.avalibe_books
             get "/books"
             expect(response).to render_template(:index)
-            #@books = assigns(:books)
+            #@books == assigns(:books)
             expect(assigns(:books)).to eq(book) 
         end
     end

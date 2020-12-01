@@ -53,7 +53,9 @@ gem 'city-state'
 gem 'poltergeist'
 gem 'geckodriver-helper'
 
+gem 'pickadate-rails'
 
+gem "simple_calendar"
 
 
 
@@ -68,5 +70,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'shoulda-matchers', '~> 4.0'
+
 
 end

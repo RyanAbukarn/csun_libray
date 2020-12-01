@@ -13,4 +13,9 @@
  *= require_tree .
  *= require_self
  */
- @import "bootstrap";
+ @import 'bootstrap';
+ @import "pickadate/default";
+ @import "simple_calendar";
+
+@import "pickadate/default.date";  
+@import "pickadate/default.time";

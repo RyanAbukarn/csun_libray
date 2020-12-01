@@ -20,8 +20,8 @@ RSpec.describe SessionsController, type: :request do
         end
         it "Return all users" do
             users = User.all
-            get "/users"
-            expect(response).to render_template(:index)
+            get "/all_users"
+            expect(response).to render_template(:all_users)
             expect(assigns(:users)).to eq(users)
         end
         it "Delete account" do

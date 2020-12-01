@@ -1,17 +1,22 @@
 class UsersController < ApplicationController
     
     before_action :require_signin , except: [:new, :create]
-    before_action :require_admin, only: [:index]
+    before_action :require_admin, only: [:index,:all_users,:dashboard]
     before_action :redirect_correct_user, only: [:edit, :update, :show, :destory]
     def index
+        @events = Registration.registred_books
+    end
+    def all_users
         @users = User.all
     end
-    
+    def dashboard
+    end
     def new
         @user = User.new 
     end
 
     def edit
+        @user = User.find(params[:id])
     end
 
     def update
@@ -69,8 +74,5 @@ private
     def user_perams
         params.require(:user).permit(:fname,:lname,:email,:phone,:address,:city,:state,:password)
     end
-
-
-
 end
 

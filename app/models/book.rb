@@ -9,7 +9,7 @@ class Book < ApplicationRecord
         joins("left outer join registrations on registrations.book_id = books.id").where(:registrations => {:id=>nil})
     }
     def self.registered_avalible_books_by_date(start,ends)
-        joins(:registration).where.not('check_in BETWEEN ? AND ?', start.beginning_of_day, ends.end_of_day).where.not('check_out BETWEEN ? AND ?', start.beginning_of_day, ends.end_of_day)
+        joins(:registration).where.not('check_in BETWEEN ? AND ?', start.beginning_of_day, ends.end_of_day).group(:book_id)
     end
     
 end

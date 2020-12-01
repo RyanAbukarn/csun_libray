@@ -2,13 +2,14 @@ class ApplicationController < ActionController::Base
     def cities
         render json: CS.cities(params[:state], :us).to_json
     end
+   
     
     private
 
         def require_signin
             unless current_user
                 session[:url] = request.url
-                redirect_to new_session_url, alert: "Please sign in first"
+                redirect_to new_session_url, notice: "Please sign in first"
             end
         end
 
@@ -33,6 +34,7 @@ class ApplicationController < ActionController::Base
         def make_user_admin
             current_user == nil ? false : current_user.admin?
         end
+        
 
     helper_method :make_user_admin
     helper_method :date_validation

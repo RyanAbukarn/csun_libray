@@ -1,0 +1,55 @@
+<% if current_user && current_user.admin? %>
+    <div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Users</h5>
+        <p class="card-text">To view users and which book they rented</p>
+        </div>
+        <div class="card-footer">
+            <%= link_to 'view all users ',all_users_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Adding a Book</h5>
+        <p class="card-text">To add new brand books</p>
+        </div>
+        <div class="card-footer">
+            <%= link_to 'Add new books',new_book_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Books</h5>
+        <p class="card-text">To view delete and edit books</p>
+        </div>
+        <div class="card-footer">
+            <%= link_to 'view all books',all_books_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">User</h5>
+        <p class="card-text">To add a new admin user</p>
+        </div>
+        <div class="card-footer">
+            <%= link_to 'Sign Up admin user',signup_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+    </div>
+        <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">User Calender</h5>
+        <p class="card-text">Viewing which books should be checked in or checked out in a calender view</p>
+        </div>
+        <div class="card-footer">
+            <%= link_to 'Calender',users_path, class: "btn btn-outline-success my-2 my-sm-0" %>
+        </div>
+    </div>
+</div>
+        
+
+    
+<% end %>

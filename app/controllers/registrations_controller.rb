@@ -16,24 +16,17 @@ class RegistrationsController < ApplicationController
 
     def create
 
-        start = covert_datetime(registration_params,"check_in") 
-        ends = covert_datetime(registration_params,"check_out")
-
         @book = Book.find(params[:book_id])
         @registration = @book.registration.new(registration_params)
         @registration.user_id = session[:user_id] 
 
-        if(date_validation(start,ends))
-            if Registration.is_available_to_rent(params[:book_id],start,ends)
-                if @registration.save  
-                    redirect_to "/books", notice: "book successfully booked!"
-                end
-            else 
-                render :new, notice: "Already booked!"
-            end 
-        else
-            render :new, notice: "chick-in date is bigger than check-out date"
-        end
+        
+        if Registration.is_available_to_rent(@book.id,@registration.check_in,@registration.check_out) && @registration.save  
+            redirect_to "/books", notice: "book successfully booked!"
+                
+        else 
+            render :new, notice: "Already booked!"
+        end 
     end
 
     def edit
@@ -45,20 +38,15 @@ class RegistrationsController < ApplicationController
         is_the_user_has_book = returned(params[:registration][:is_checked_in])
         is_the_book_retured = returned(params[:registration][:is_checked_out])
         @registration = Registration.find(params[:id])
-
-        start = covert_datetime(registration_params,"check_in") 
-        ends = covert_datetime(registration_params,"check_out")
-        if(date_validation(start,ends))
-            if is_the_user_has_book
-                if @registration.update(registration_params)  
-                    redirect_to "/users", notice: "updated successfully"
-                end
-            elsif is_the_book_retured
-                @registration.destroy
-                redirect_to "/books", notice: "The book is available"
+        if is_the_user_has_book
+            if @registration.update(registration_params)  
+                redirect_to "/users", notice: "updated successfully"
+            else
+                render :new, notice: "chick-in date is bigger than check-out date"
             end
-        else
-            render :new, notice: "chick-in date is bigger than check-out date"
+        elsif is_the_book_retured
+            @registration.destroy
+            redirect_to "/books", notice: "The book is available"
         end
     end
 
@@ -67,9 +55,7 @@ class RegistrationsController < ApplicationController
             params.require(:registration).permit(:check_in,:check_out,:is_checked_out,:is_checked_in)
         end
 
-        def covert_datetime(paramDate,string)
-            DateTime.new(paramDate["#{string}(1i)"].to_i ,paramDate["#{string}(2i)"].to_i, paramDate["#{string}(3i)"].to_i, paramDate["#{string}(4i)"].to_i, paramDate["#{string}(5i)"].to_i)
-        end
+
         
         def returned(is_return)
             if is_return != nil

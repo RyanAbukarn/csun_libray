@@ -128,6 +128,8 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    pickadate-rails (3.5.6.0)
+      railties (>= 3.1.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -206,6 +208,10 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    shoulda-matchers (4.4.1)
+      activesupport (>= 4.2.0)
+    simple_calendar (2.2.7)
+      rails (>= 3.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -258,6 +264,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
+  pickadate-rails
   poltergeist
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
@@ -265,6 +272,8 @@ DEPENDENCIES
   rspec-rails
   sass-rails (>= 6)
   selenium-webdriver
+  shoulda-matchers (~> 4.0)
+  simple_calendar
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)

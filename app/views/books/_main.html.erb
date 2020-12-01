@@ -1,21 +1,41 @@
 <h5>Search by date</h5>
-<%= form_tag(by_date_path) do %>
-<p>
-    <%= label_tag :start, "check-in:", class: "col-md-4 control-label" %><br/>
-    <%= datetime_select("start", "written_on")%>
-</p>
-<p>
-    <%= label_tag :ends, "check-out:", class: "col-md-4 control-label"  %><br/>
-    <%= datetime_select("ends", "written_on")%>
-</p>
-
-<p>
-    <%= submit_tag "Search" %>
-</p>
-
+<%= form_tag(by_date_path,  remote: true) do %>
+  <p>
+    <%= label_tag :starts, "check-in:", class: "col-md-4 control-label" %><br/>
+    <%= datetime_local_field_tag :starts%>
+  <p>
+    <%= label_tag :ends, "check-in:", class: "col-md-4 control-label" %><br/>
+    <%= datetime_local_field_tag :ends %>
+  </p>
+  <p>
+    <%= button_tag "Search",remote: true%>
+  </p>
 <% end %>
 
 <h5>Available any time</h5>
+<table class=" table table-striped sortable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author name</th>
+      <th>ISBN</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @books %>
+  </tbody>
+</table>
+
+<h5>Available from
+  <span id="startsTime" class="badge badge-secondary">
+    <%= @starts.to_s(:long) %>
+  </span> 
+to  
+  <span id="endsTime" class="badge badge-secondary">
+    <%= @ends.to_s(:long)%>
+  </span> 
+</h5>
 
 <table class=" table table-striped sortable">
   <thead>
@@ -26,21 +46,8 @@
       <th>Actions</th>
     </tr>
   </thead>
-
-   <% @books.each do |book| %>
-     <tr>
-        <td><%= link_to book.name,book_path(book) %></td>
-        <td><%= book.author %></td>
-        <td><%= book.isbn %></td>
-        <td>
-          <% if current_user && current_user.admin? %>
-            <%= link_to "Edit",edit_book_path(book), class: "btn btn-default btn-info" %>
-            <%= link_to "Delete",book_path(book), data: {:confirm => 'Are you sure?'}, :method => :delete , class: "btn btn-default btn-danger" %>
-          <% else %>
-            <%= link_to "Rent",new_book_registration_path(book), class: "btn btn-default btn-primary" %>
-          <% end %>
-        </td>
-    </tr>
-   <% end %>
-
+  <tbody id= "booksByDate">
+    <%= render @books_by_date %>
+  <tbody>
 </table>
+

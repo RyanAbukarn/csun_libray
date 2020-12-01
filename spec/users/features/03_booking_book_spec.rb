@@ -9,9 +9,11 @@ RSpec.describe "booking books" do
         end
         scenario 'Login first to rent a book' do
             expect(page).to have_content("book successfully booked!")
+            click_link("#{@user.fname}")
+            expect(page).to have_content("Order is successfully canceled!")
+
         end
-        scenario 'Canceling order' ,js: true do
-           
+        scenario 'Canceling order',js: true do
             click_link("#{@user.fname}")
             accept_confirm do
                 click_button('Cancel Order')
@@ -57,7 +59,7 @@ end
 def rentAbook
     click_link("Rent")
     login
-    select "18", from: "registration_check_in_3i"
-    select "30", from: "registration_check_out_3i"
+    fill_in "registration_check_in", with: "2020-10-11T03:00"
+    fill_in "registration_check_out", with: "2020-10-11T05:00"
     click_button("Submit")
 end 

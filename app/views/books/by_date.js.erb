@@ -1,0 +1,9 @@
+bookTable = document.getElementById("booksByDate")
+statsSpam = document.getElementById("startsTime")
+endsSpam = document.getElementById("endsTime")
+
+endsSpam.innerHTML = "<%= @ends.to_s(:long) %>"
+statsSpam.innerHTML = "<%= @starts.to_s(:long) %>"
+
+bookTable.innerHTML = ""
+bookTable.innerHTML = "<%= j render @books_by_date %>"

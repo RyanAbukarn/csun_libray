@@ -6,29 +6,30 @@ class BooksController < ApplicationController
 
     def index
         @books = Book.avalibe_books
+        @starts = DateTime.now
+        @ends = @starts + 7
+        @books_by_date = Book.registered_avalible_books_by_date(@starts, @ends)
     end
-
-    def all_books
-        @books = Book.all
-    end
-    
-    def new
-        @book = Book.new
-    end
-
     def by_date
-        @start1 = covert_to_datetime(params[:start])
-        @ends1  = covert_to_datetime(params[:ends])
-        @books  = Book.avalibe_books
-        if(date_validation(@start1,@ends1))
-            @book_by_date = Book.registered_avalible_books_by_date(@start1, @ends1)
+        @starts = DateTime.parse(params[:starts])
+        @ends = DateTime.parse(params[:ends])
+        if(@ends > @starts)
+            @books_by_date = Book.registered_avalible_books_by_date(@starts, @ends)
+            respond_to do |format|
+                format.js
+            end
         else
             redirect_to root_url, notice: "chick-in date is bigger than check-out date"
         end
     end
 
-    def by_date_new
-        redirect_to books_url
+    def all_books
+        @books = Book.all
+        
+    end
+    
+    def new
+        @book = Book.new
     end
 
     def edit
@@ -45,7 +46,6 @@ class BooksController < ApplicationController
     end
     
     def create
-        
         @book = Book.new(book_perams)
         if @book.save
             redirect_to @book, notice: "Book successfully created!" 
@@ -57,7 +57,9 @@ class BooksController < ApplicationController
     def destroy
         @book = Book.find(params[:id])
         @book.destroy
-        redirect_to books_url, notice: "Book successfully deleted!"
+        respond_to do |format|
+            format.js
+        end
     end
     
     def show
@@ -65,12 +67,7 @@ class BooksController < ApplicationController
     end
 
     private
-    
         def book_perams
             params.require(:book).permit(:name,:author,:isbn,:describtion)
-        end
-
-        def covert_to_datetime(paramDate)
-            DateTime.new(paramDate['written_on(1i)'].to_i ,paramDate['written_on(2i)'].to_i, paramDate['written_on(3i)'].to_i, paramDate['written_on(4i)'].to_i, paramDate['written_on(5i)'].to_i)
         end
 end

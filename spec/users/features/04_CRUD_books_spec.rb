@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe "CRUD Books" do
     feature 'CRUD for admin users' do
         before(:each) do
-            create_list(:book,1)
+            @book = create_list(:book,1)
             @user = create(:user, admin: true)
             visit '/all_books'
 
@@ -16,6 +16,7 @@ RSpec.describe "CRUD Books" do
         end
         scenario 'Adding a book' do
             beforeAdding = Book.all.count
+            click_link("Dashborad")
             click_link("Add new books")
             fill_in "book_name" ,with: "this book loves you"
             fill_in "book_author" ,with: "stephen king"
@@ -31,7 +32,7 @@ RSpec.describe "CRUD Books" do
             accept_confirm do
                 click_link("Delete")
             end
-            expect(page).to have_content("Book successfully deleted!")
+            expect(page).to have_content(@book[0].name)
         end
         scenario 'accessing all books' do
             booked_books = create_list(:registration,3,is_checked_in: true)
