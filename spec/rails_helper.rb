@@ -54,7 +54,7 @@ RSpec.configure do |config|
   end
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
-
+  config.infer_spec_type_from_file_location!
   Capybara.javascript_driver = :selenium_chrome_headless
   #config.formatter = :documentation
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

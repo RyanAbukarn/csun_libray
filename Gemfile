@@ -71,6 +71,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda', '~> 4.0'
 
 
 end

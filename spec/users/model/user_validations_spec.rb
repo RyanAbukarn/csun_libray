@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Users", type: :model do
     let(:user) { FactoryBot.create :user }
     let(:book) { FactoryBot.create :book }
-    subject { build(:user) }
+    subject { build(:user) } 
     describe "belong to a user" do 
         it "check if a book belong to a user" do
             r = create(:registration, user: user, book: book)
@@ -22,7 +22,6 @@ RSpec.describe "Users", type: :model do
         it { should validate_presence_of(:email) }
         it { should_not allow_value("foo").for(:email) }
         it { should_not allow_value("foo@").for(:email) }
-
         it { is_expected.to allow_value("email@addresse.foo").for(:email) }
 
         it { should validate_presence_of(:phone) }
@@ -45,12 +44,11 @@ RSpec.describe "Users", type: :model do
 
       
         it "check if user in the system" do
-            user.save
-            User.auth(user.email,user.password_digest)
+            expect(User.auth(user.email,"123456")).to eq(user)
         end
 
         it "check if user not the system" do
-            User.auth(user.email,user.password_digest) == false
+            expect(User.auth(subject.email,"123456")).to equal(nil)
         end
     end
     context "Relations" do

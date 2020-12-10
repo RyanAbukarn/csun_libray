@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
             redirect_to(session[:url] || user)
             session[:url] = nil
         else
-            render :new
+            redirect_to "/session/new", notice: "Wrong password/email" 
         end
     end
     def destroy

@@ -24,6 +24,6 @@ class Registration < ApplicationRecord
       !Registration.where("book_id=#{book_id} and check_in ='#{start}' or check_out='#{ends}'").any?
     end
     def self.registred_books
-      Registration.all.where(is_checked_out: false)
+      Registration.all
     end
 end

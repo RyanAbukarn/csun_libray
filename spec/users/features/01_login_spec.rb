@@ -16,13 +16,13 @@ RSpec.describe "login and logout" do
             fill_in "email",	with: @user.email
             fill_in "password", with: "1"
             click_button("login")
-            expect(page).to have_content("Log In")
+            expect(page).to have_content("Wrong password/email")
         end
         scenario 'login with invaild username' do
             fill_in "email",	with: "someone"
             fill_in "password", with: @user.password
             click_button("login")
-            expect(page).to have_content("Log In")
+            expect(page).to have_content("Wrong password/email")
         end
         scenario 'login then logout' do
             fill_in "email",	with: @user.email

@@ -2,23 +2,24 @@ require 'rails_helper'
 RSpec.describe "booking books" do
     feature 'for normal users' do
         before(:each) do
-            create_list(:book,1)
+            create(:book)
             @user = create(:user)
             visit '/'
-            rentAbook
         end
         scenario 'Login first to rent a book' do
+
+            rentAbook
             expect(page).to have_content("book successfully booked!")
-            click_link("#{@user.fname}")
-            expect(page).to have_content("Order is successfully canceled!")
 
         end
-        scenario 'Canceling order',js: true do
+        scenario 'Canceling order', js: true do
+            rentAbook
             click_link("#{@user.fname}")
             accept_confirm do
                 click_button('Cancel Order')
             end
             expect(page).to have_content("Order is successfully canceled!")
+
         end
     end
     feature 'For admin user' do
@@ -28,7 +29,7 @@ RSpec.describe "booking books" do
             visit '/'
             click_link("Log In")
             login
-            visit '/users'
+            visit '/all_users'
             
         end
         scenario 'User took the book and returned it' do
@@ -37,8 +38,8 @@ RSpec.describe "booking books" do
             click_button("Submit")
 
             expect(page).to have_content("updated successfully")
+            visit '/all_users'
             click_link("Edit")
-
             expect(page).not_to have_content("Did user take the book")
             choose('registration_is_checked_out_true')
             click_button("Submit")
@@ -59,7 +60,7 @@ end
 def rentAbook
     click_link("Rent")
     login
-    fill_in "registration_check_in", with: "2020-10-11T03:00"
-    fill_in "registration_check_out", with: "2020-10-11T05:00"
+    select "3" , from: "registration_check_in_3i"
+    select "5" , from: "registration_check_out_3i"
     click_button("Submit")
 end 

@@ -9,21 +9,20 @@ class RegistrationsController < ApplicationController
 
     def destroy
         #book_id is registration id
-        @reg = Registration.find(params[:book_id])
-        @reg.destroy
-        redirect_to user_url, notice: "Order is successfully canceled!"
+        reg = Registration.find(params[:book_id])
+        if !reg.is_checked_in && reg.destroy
+            redirect_to user_url, notice: "Order is successfully canceled!"
+        else 
+            redirect_to user_url, notice: "Order is not successfully canceled!"
+        end
     end
 
     def create
-
         @book = Book.find(params[:book_id])
         @registration = @book.registration.new(registration_params)
         @registration.user_id = session[:user_id] 
-
-        
         if Registration.is_available_to_rent(@book.id,@registration.check_in,@registration.check_out) && @registration.save  
             redirect_to "/books", notice: "book successfully booked!"
-                
         else 
             render :new, notice: "Already booked!"
         end 
@@ -52,14 +51,18 @@ class RegistrationsController < ApplicationController
 
     private
         def registration_params
-            params.require(:registration).permit(:check_in,:check_out,:is_checked_out,:is_checked_in)
+            if is_user_admin
+                params.require(:registration).permit(:check_in,:check_out,:is_checked_out,:is_checked_in)
+            else
+                params.require(:registration).permit(:check_in,:check_out)
+            end
         end
 
 
         
         def returned(is_return)
             if is_return != nil
-                is_return=="false" ? false : true
+                is_return
             else
                 false
             end

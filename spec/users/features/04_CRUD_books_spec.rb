@@ -2,11 +2,10 @@ require 'rails_helper'
 RSpec.describe "CRUD Books" do
     feature 'CRUD for admin users' do
         before(:each) do
-            @book = create_list(:book,1)
+            @book = create(:book)
             @user = create(:user, admin: true)
             visit '/all_books'
-
-            longin(@user)
+            login
         end
         scenario 'Editing a book' do
             click_link("Edit")
@@ -32,12 +31,11 @@ RSpec.describe "CRUD Books" do
             accept_confirm do
                 click_link("Delete")
             end
-            expect(page).to have_content(@book[0].name)
+            expect(page).not_to have_content(@book.name)
         end
         scenario 'accessing all books' do
-            booked_books = create_list(:registration,3,is_checked_in: true)
+            booked_books = create_list(:registration,3,:booked_for_a_whole_week)
             visit '/all_books'
-
             expect(page).to have_content(booked_books[0].book.name)
             expect(page).to have_content(booked_books[1].book.name)
             expect(page).to have_content(booked_books[2].book.name)
@@ -45,26 +43,27 @@ RSpec.describe "CRUD Books" do
         end
     end
     feature 'CRUD for NOT admin users' do
-        before(:each) do
-            @booked_books = create_list(:registration,3,is_checked_in: true)
+        before(:each) do 
             @user = create(:user)
-            
-            visit '/all_books'
-
-            longin(@user)
-            
+            @book = create_list(:registration,3,:booked_for_a_whole_week) 
+            visit '/'
         end
-        scenario 'accessing all books' do
-            expect(page).not_to have_content(@booked_books[0].book.name)
-            expect(page).not_to have_content(@booked_books[1].book.name)
-            expect(page).not_to have_content(@booked_books[2].book.name)
-
+        scenario 'viewing booked books' do
+            expect(page).to have_content(@book[0].book.name)
+            expect(page).to have_content(@book[1].book.name)
+            expect(page).to have_content(@book[2].book.name)
+        end
+        scenario 'not viewing all books', focus: true do
+            click_link("Log In")
+            login
+            visit '/all_books'
+            expect(page).to have_content("Search by date")
         end
     end
 end
 
-def longin(user)
-    fill_in "email",	with: user.email
+def login
+    fill_in "email",	with: @user.email
     fill_in "password", with: "123456"
     click_button("login")
 end
