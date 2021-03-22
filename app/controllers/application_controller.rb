@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
     def cities
         render json: CS.cities(params[:state], :us).to_json
@@ -37,8 +38,31 @@ class ApplicationController < ActionController::Base
         def make_user_admin
             current_user == nil ? false : current_user.admin?
         end
-        
-
+        def authenticate_user
+            token , _option = token_and_options(request)
+            if token.nil?
+                token = http_auth_header
+            end
+            user_id = AuthenticationTokenService.decode(token)
+            User.find(user_id)
+            rescue ActiveRecord::RecordNotFound
+                render json: {statues: :unauthorized} , statues: :unauthorized  
+        end
+        def http_auth_header
+            token = params["headers"]["Authorization"].split(" ")[1]
+            if token.present?
+              return  params["headers"]["Authorization"].split(" ")[1]
+            else
+                nil
+            end
+        end
+        # def session_user
+        #     decoded_hash = decoded_token
+        #     if !decoded_hash.empty?
+                
+        #     end
+        # end
+    helper_method :authenticate_user
     helper_method :make_user_admin
     helper_method :date_validation
     helper_method :require_admin

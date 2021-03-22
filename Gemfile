@@ -56,8 +56,10 @@ gem 'geckodriver-helper'
 gem 'pickadate-rails'
 
 gem "simple_calendar"
+gem 'jwt'
 
 
+gem 'pry', '~> 0.13.1'
 
 
 
